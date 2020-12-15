@@ -38,9 +38,10 @@ Configuration firewall et vérification que les ports SSH et MySql sont ouverts.
 ```
 $ sudo ufw status
 $ sudo ufw enable
-$ sudo allow ssh
-$ sudo allow 3306
+$ sudo ufw allow ssh
+$ sudo ufw allow 3306
 $ sudo ufw allow http
+$ sudo ufw allow https
 $ sudo ufw status verbose
 Status: active
 Logging: on (low)
