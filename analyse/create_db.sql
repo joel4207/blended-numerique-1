@@ -1,5 +1,6 @@
 CREATE TABLE contacts(
    contact_id INT,
+   date_contact DATETIME,
    email VARCHAR(250),
    nom VARCHAR(250),
    prenom VARCHAR(250),
