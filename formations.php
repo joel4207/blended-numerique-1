@@ -7,20 +7,32 @@ function createFormations( $formation )
 {
     global $bdd;
 
-    $bdd->query( "INSERT INTO formations (formation_id, formation) VALUES (NULL, '$formation')" );
+    $nId = 0;
 
-    return( $bdd->lastInsertId() );
+    if ( checkStr( $formation, 2, 250 ) ) {
+        $sRequete = "INSERT INTO formations (formation) 
+                    VALUES ('$formation')";
+        $bdd->query( $sRequete );
+        $nId = intVal( $bdd->lastInsertId() );
+    }
+
+    return( $nId );
 }
 
 // Read - lecture d'une formation
 function readFormations( $formation_id ) 
 {
     global $bdd;
-     
-    $requete = "SELECT * FROM formations WHERE formation_id = $formation_id"; 
+    
+    $aFormation = [];
 
-    $stmt = $bdd->query( $requete, PDO::FETCH_ASSOC );
-    $aFormation = $stmt->fetch();   // recuperer un seul enregistrement
+    if ( checkId( $formation_id ) ) {
+        $sRequete = "SELECT * 
+                FROM formations 
+                WHERE formation_id = $formation_id"; 
+        $stmt = $bdd->query( $sRequete, PDO::FETCH_ASSOC );
+        $aFormation = $stmt->fetch();   // recuperer un seul enregistrement
+    }
 
     return($aFormation);
 }
@@ -30,7 +42,12 @@ function updateFormations( $formation_id, $formation )
 {
     global $bdd;
 
-    $bdd->query("UPDATE formations SET formation = '$formation' WHERE formation_id = $formation_id");
+    if ( checkId( $formation_id ) && checkStr( $formation, 2, 250 ) ) {
+        $sRequete = "UPDATE formations 
+                SET formation = '$formation' 
+                WHERE formation_id = $formation_id";
+        $bdd->query( $sRequete );
+    }
 }
 
 // Delete - effacement d'une formation
@@ -38,7 +55,11 @@ function deleteFormations( $formation_id )
 {
     global $bdd;
 
-    $bdd->query("DELETE FROM formations WHERE formation_id = $formation_id");
+    if ( checkId( $formation_id ) ) {
+        $sRequete = "DELETE FROM formations 
+                    WHERE formation_id = $formation_id";
+        $bdd->query( $sRequete );
+    }
 }
 
 // Liste de toutes les formations
@@ -46,9 +67,9 @@ function indexFormations()
 {
     global $bdd;
 
-    $requete = "SELECT * FROM formations";
+    $sRequete = "SELECT * FROM formations";
 
-    $stmt = $bdd->query( $requete, PDO::FETCH_ASSOC );
+    $stmt = $bdd->query( $sRequete, PDO::FETCH_ASSOC );
     $aFormations = $stmt->fetchAll();   // Récupération de toutes les lignes
 
     return( $aFormations );

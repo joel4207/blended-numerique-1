@@ -15,7 +15,7 @@ function openDatabase()
 
     try {
         // connexion bdd
-        $bdd = new PDO( "mysql:host=$mysql_host;dbname=$mysql_db", $mysql_user, $mysql_pwd );
+        $bdd = new PDO( "mysql:host=$mysql_host;dbname=$mysql_db;charset=utf8", $mysql_user, $mysql_pwd );
         // Déclencher une exception en cas d'erreur
         $bdd->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     }

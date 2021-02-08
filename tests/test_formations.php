@@ -1,13 +1,13 @@
 <?php 
 /* Test du modele formations
 */
-require_once( "database.php" );
-require_once( "formations.php" );
+require_once( "../database.php" );
+require_once( "../formations.php" );
 
 openDatabase();
 
 $nId = createFormations( "Formation 1" );
-updateFormations( $nId, "Formation DWWM" );
+updateFormations( $nId, "DWWM" );
 
 $nId = createFormations( "Formation à effacer" );
 $aFormation = readFormations( $nId );
