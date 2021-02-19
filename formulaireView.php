@@ -2,7 +2,7 @@
 
 function formulaireView( $aMotifs, $aFormations )
 {
-    $sPart1 = <<<'EOD'
+    $sPartDebut = <<<'EOD'
 <!doctype html>
 <html>
     <head>   
@@ -48,7 +48,7 @@ function formulaireView( $aMotifs, $aFormations )
             </tr>
 EOD;
 
-    $sPart2 = <<<'EOD'
+    $sPartFin = <<<'EOD'
             <tr>
                 <td><label for ="messages">Message :</label></td>
                 <td><textarea name ="message" id="message" cols="50" rows="10"></textarea></td>
@@ -65,51 +65,62 @@ EOD;
     $sOptionsMotifs = getOptionsMotifs( $aMotifs );
     $sOptionsFormations = getOptionsFormations( $aFormations );
 
-    return( $sPart1 . $sOptionsMotifs . $sOptionsFormations . $sPart2 );
+    return( $sPartDebut . $sOptionsMotifs . $sOptionsFormations . $sPartFin );
 }
 
 function getOptionsMotifs( $aMotifs )
 {
-    $sOptionsMotifs = <<<'EOD'
-                <tr>
-                    <td><label>Motif:</label></td>
-                    <td><input type ="checkbox" id= "motif" name ="motif[]" value="motif1">Prendre rendez-vous avec le coordinateur</td>
-                </tr>    
+    $sOptionsMotifs = "";
+    $nLigne = 1;
+
+    foreach( $aMotifs as $aMotif ) {
+        if ( $nLigne==1 ) {
+            $sLabelMotif = "<label>Motif:</label>";
+        } else {
+            $sLabelMotif = "";
+        }
+
+        $sOptionsMotifs .= '
+                    <tr>
+                    <td>'.$sLabelMotif.'</td>
+                    <td><input type="checkbox" id="motif" name ="motif[]" value="'.$aMotif['motif_id'].'">&nbsp;'.$aMotif['motif'].'</td>
+                    </tr>'.PHP_EOL;  
+        $nLigne++;  
+    }
+
+    $sOptionsMotifs .= <<<'EOD'
                 <tr>
                     <td></td>
-                    <td><input type ="checkbox" id= "motif" name ="motif[]" value="motif2">Demande d'information</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type ="checkbox" id= "motif" name ="motif[]" value="motif3">Pré-inscription</td>
                 </tr>
                 <tr>
                     <td></td>
                 </tr>
 EOD;
+
     return( $sOptionsMotifs );
 }
 
 function getOptionsFormations( $aFormations )
 {
-    $sOptionsFormations = <<<'EOD'
-                <tr>
-                    <td><label>Formations:</label></td>
-                    <td><input type ="checkbox" id= "formation" name ="formation[]" value="dwwm">DWWM - Développeur Web et Web Mobile</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type ="checkbox" id= "formation" name ="formation[]" value="dw">DW - Designer Web</td>
-                </tr>
-                <tr>
-                    <td></td>                
-                    <td><input type ="checkbox" id= "formation" name ="formation[]" value="tssr">TSSR - Technicien Supérieur Sytèmes et Réseaux</td>
-                </tr>
-                <tr>
-                    <td></td>                
-                    <td><input type ="checkbox" id= "formation" name ="formation[]" value="tai">TAI - Technicien Assistance Informatique</td>
-                </tr>
-EOD;
+
+    $sOptionsFormations = "";
+    $nLigne = 1;
+    foreach ($aFormations as $aFormation) {
+
+        if ( $nLigne == 1 ) {
+            $sLabelFormations = "<label>Formations:</label>";
+        } else {
+            $sLabelFormations = "";
+        }
+
+        $sOptionsFormations .= '
+        <tr>
+            <td>'.$sLabelFormations.'</td>
+            <td><input type="checkbox" id="formation" name ="formation[]" value="'.$aFormation['formation_id'].'">&nbsp;'.$aFormation['formation'].'</td>
+        </tr>';
+
+    $nLigne++;
+    }
 
     return( $sOptionsFormations );    
 }
