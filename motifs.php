@@ -27,10 +27,14 @@ function readMotifs( $motif_id )
      
     $aMotif = [];
 
+    print("motif_id:".$motif_id);
+
     if ( checkId( $motif_id ) ) {
         $sRequete = "SELECT * 
                     FROM motifs 
                     WHERE motif_id = $motif_id"; 
+        print("requete:".$sRequete);
+        var_dump(PDO::FETCH_ASSOC);
         $stmt = $bdd->query( $sRequete, PDO::FETCH_ASSOC );
         $aMotif = $stmt->fetch();   // recuperer un seul enregistrement
         }
