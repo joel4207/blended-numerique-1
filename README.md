@@ -1,5 +1,5 @@
 # blended-numerique
-Projet site web blended numérique
+Projet site web blended numérique.
 
 Communications sur le forum moodle "Projet site web Blended Numérique"
 
